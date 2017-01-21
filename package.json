@@ -1,0 +1,16 @@
+{
+  "name": "jsum",
+  "version": "0.0.1",
+  "description": "JSON checksum!",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "JSON",
+    "checksum",
+    "hash"
+  ],
+  "author": "Yan Foto",
+  "license": "MIT"
+}
