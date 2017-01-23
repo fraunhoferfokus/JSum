@@ -6,6 +6,10 @@
   "scripts": {
     "test": "mocha"
   },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/fraunhoferfokus/JSum.git"
+  },
   "keywords": [
     "JSON",
     "checksum",
