@@ -1,6 +1,8 @@
 # JSum
 Consistent checksum calculation of JSON objects.
 
+[![Build Status](https://travis-ci.org/fraunhoferfokus/JSum.svg?branch=master)](https://travis-ci.org/fraunhoferfokus/JSum)
+
 ## Quick start
 ```js
 const JSum = require('jsum')
