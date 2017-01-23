@@ -1,0 +1,16 @@
+language: node_js
+
+node_js:
+  - "4"
+  - "5"
+  - "6"
+  - "node"
+
+install: npm install
+
+before_script:
+  - npm install -g mocha
+  - npm install -g standard
+script:
+  - standard
+  - npm test
