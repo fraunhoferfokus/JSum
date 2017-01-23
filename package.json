@@ -16,7 +16,7 @@
     "hash"
   ],
   "author": "Yan Foto",
-  "license": "MIT",
+  "license": "AGPLv3",
   "devDependencies": {
     "chai": "^3.5.0"
   }
