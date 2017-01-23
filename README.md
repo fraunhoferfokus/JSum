@@ -64,11 +64,11 @@ Fair enough! Just copy (check the license first!) this for your own code and has
  */
 function serialize (obj) {
   if (Array.isArray(obj)) {
-    return JSON.stringify(obj.map(i => stringify(i)))
+    return JSON.stringify(obj.map(i => serialize(i)))
   } else if (typeof obj === 'object' && obj !== null) {
     return Object.keys(obj)
       .sort()
-      .map(k => `${k}:${stringify(obj[k])}`)
+      .map(k => `${k}:${serialize(obj[k])}`)
       .join('|')
   }
 
