@@ -1,6 +1,6 @@
 {
   "name": "jsum",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Consistent checksum calculation of JSON objects.",
   "main": "index.js",
   "scripts": {
