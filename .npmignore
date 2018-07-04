@@ -46,6 +46,5 @@ jspm_packages
 # Yarn Integrity file
 .yarn-integrity
 
-# Unnecessary uploaded files in firest version
-test.json
-.vscode/
+benchmark/
+test/

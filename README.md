@@ -44,11 +44,45 @@ of time advantage over some other viable modules\*:
 | `json-checksum`         | `FATAL ERROR: [...] - process out of memory`        |
 
 
-\***NOTE**: The measurements above are not from *formal benchmarking*. A huge [random JSON file](https://github.com/zemirco/sf-city-lots-json)
+For this trivial test a huge [random JSON file](https://github.com/zemirco/sf-city-lots-json)
 (181 MB) was taken as the base for benchmarking. The listed modules were used to create `SHA256` hash of that file. To measure the time,
-internal `console.time(()` and `console.timeEnd()` methods were used.
+internal `console.time(()` and `console.timeEnd()` methods were used. Serious benchmarking is described below.
 
-## I don't whant this :-(
+## Benchmarking
+You can also run benchmarks to compare performance with similar modules:
+
+```bash
+npm i --no-save \
+  benchmarked \
+  fast-json-stable-stringify \
+  json-checksum json-hash \
+  json-stable-stringify
+node benchmark/index.js
+```
+
+Results:
+
+```
+# benchmark/fixtures/medium.json (77986 bytes)
+  fast-json-stable-stringify x 366 ops/sec ±8.11% (66 runs sampled)
+  json-checksum x 200 ops/sec ±2.30% (76 runs sampled)
+  json-hash x 82.65 ops/sec ±1.93% (68 runs sampled)
+  json-stable-stringify x 384 ops/sec ±1.82% (81 runs sampled)
+  jsum x 822 ops/sec ±2.83% (80 runs sampled)
+
+  fastest is jsum
+
+# benchmark/fixtures/small.json (456 bytes)
+  fast-json-stable-stringify x 47,956 ops/sec ±3.17% (82 runs sampled)
+  json-checksum x 15,424 ops/sec ±3.97% (74 runs sampled)
+  json-hash x 7,536 ops/sec ±2.08% (82 runs sampled)
+  json-stable-stringify x 32,833 ops/sec ±3.99% (76 runs sampled)
+  jsum x 76,765 ops/sec ±2.31% (78 runs sampled)
+
+  fastest is jsum
+```
+
+## I don't want this :-(
 Fair enough! Just copy (check the license first!) this for your own code and hash as you will:
 
 ```js

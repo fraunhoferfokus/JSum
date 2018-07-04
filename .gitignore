@@ -46,3 +46,4 @@ jspm_packages
 # Yarn Integrity file
 .yarn-integrity
 
+.vscode/

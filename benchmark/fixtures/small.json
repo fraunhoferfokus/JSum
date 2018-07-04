@@ -1,0 +1,24 @@
+{
+  "name": "jsum",
+  "version": "0.1.1",
+  "description": "Consistent checksum calculation of JSON objects.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/fraunhoferfokus/JSum.git"
+  },
+  "keywords": [
+    "JSON",
+    "checksum",
+    "hash"
+  ],
+  "author": "Yan Foto",
+  "license": "AGPLv3",
+  "devDependencies": {
+    "benchmarked": "^2.0.0",
+    "chai": "^3.5.0"
+  }
+}
