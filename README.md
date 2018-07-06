@@ -109,3 +109,5 @@ function serialize (obj) {
   return obj
 }
 ```
+
+***NOTE***: this code is slightly inferior in terms of performance comparing to module's implementation.
