@@ -18,12 +18,22 @@ const DELIM = '|'
  */
 function stringify (obj) {
   if (Array.isArray(obj)) {
-    return JSON.stringify(obj.map(i => stringify(i)))
+    let stringifiedArr = []
+    for (let i = 0; i < obj.length; i++) {
+      stringifiedArr[i] = stringify(obj[i])
+    }
+
+    return JSON.stringify(stringifiedArr)
   } else if (typeof obj === 'object' && obj !== null) {
-    return Object.keys(obj)
-      .sort()
-      .map(k => `${k}:${stringify(obj[k])}`)
-      .join(DELIM)
+    let acc = []
+    let sortedKeys = Object.keys(obj).sort()
+
+    for (let i = 0; i < sortedKeys.length; i++) {
+      let k = sortedKeys[i]
+      acc[i] = `${k}:${stringify(obj[k])}`
+    }
+
+    return acc.join(DELIM)
   }
 
   return obj
