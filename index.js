@@ -2,12 +2,12 @@
 
 const crypto = require('crypto')
 
-// Delimeter to separate object items form each other
+// Delimiter to separate object items from each other
 // when stringifying
 const DELIM = '|'
 
 /**
- * Stringifies a JSON object (not any randon JS object).
+ * Stringifies a JSON object (not any random JS object).
  *
  * It should be noted that JS objects can have members of
  * specific type (e.g. function), that are not supported
