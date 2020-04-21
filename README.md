@@ -46,7 +46,7 @@ of time advantage over some other viable modules\*:
 
 For this trivial test a huge [random JSON file](https://github.com/zemirco/sf-city-lots-json)
 (181 MB) was taken as the base for benchmarking. The listed modules were used to create `SHA256` hash of that file. To measure the time,
-internal `console.time(()` and `console.timeEnd()` methods were used. Serious benchmarking is described below.
+internal `console.time()` and `console.timeEnd()` methods were used. Serious benchmarking is described below.
 
 ## Benchmarking
 You can also run benchmarks to compare performance with similar modules:
