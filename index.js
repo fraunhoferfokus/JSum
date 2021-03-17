@@ -34,6 +34,9 @@ function stringify (obj) {
     }
 
     return acc.join(DELIM)
+  } else if (typeof obj === 'string') {
+    // See issue #6 for details
+    return `"${obj}"`
   }
 
   return obj
