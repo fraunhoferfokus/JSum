@@ -64,20 +64,20 @@ Results:
 
 ```
 # benchmark/fixtures/medium.json (77986 bytes)
-  fast-json-stable-stringify x 366 ops/sec ±8.11% (66 runs sampled)
-  json-checksum x 200 ops/sec ±2.30% (76 runs sampled)
-  json-hash x 82.65 ops/sec ±1.93% (68 runs sampled)
-  json-stable-stringify x 384 ops/sec ±1.82% (81 runs sampled)
-  jsum x 822 ops/sec ±2.83% (80 runs sampled)
+  fast-json-stable-stringify x 645 ops/sec ±0.80% (86 runs sampled)
+  json-checksum x 228 ops/sec ±0.89% (82 runs sampled)
+  json-hash x 70.25 ops/sec ±1.89% (60 runs sampled)
+  json-stable-stringify x 601 ops/sec ±1.06% (86 runs sampled)
+  jsum x 1,196 ops/sec ±1.08% (85 runs sampled)
 
   fastest is jsum
 
 # benchmark/fixtures/small.json (456 bytes)
-  fast-json-stable-stringify x 47,956 ops/sec ±3.17% (82 runs sampled)
-  json-checksum x 15,424 ops/sec ±3.97% (74 runs sampled)
-  json-hash x 7,536 ops/sec ±2.08% (82 runs sampled)
-  json-stable-stringify x 32,833 ops/sec ±3.99% (76 runs sampled)
-  jsum x 76,765 ops/sec ±2.31% (78 runs sampled)
+  fast-json-stable-stringify x 64,153 ops/sec ±1.47% (88 runs sampled)
+  json-checksum x 20,089 ops/sec ±1.88% (87 runs sampled)
+  json-hash x 6,418 ops/sec ±2.13% (75 runs sampled)
+  json-stable-stringify x 52,923 ops/sec ±1.91% (89 runs sampled)
+  jsum x 89,836 ops/sec ±0.84% (88 runs sampled)
 
   fastest is jsum
 ```
@@ -99,6 +99,8 @@ Fair enough! Just copy (check the license first!) this for your own code and has
 function serialize (obj) {
   if (Array.isArray(obj)) {
     return JSON.stringify(obj.map(i => serialize(i)))
+  } else if(typeof obj === 'string') {
+    return `"${obj}"`
   } else if (typeof obj === 'object' && obj !== null) {
     return Object.keys(obj)
       .sort()
