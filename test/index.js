@@ -6,6 +6,8 @@ const expect = require('chai').expect
 
 const jsum = require('../index')
 
+const DELIM = '\u0000'
+
 describe('JSum', function () {
   it('should correctly handle null', function () {
     // Why is null exceptional?
@@ -36,18 +38,12 @@ describe('JSum', function () {
 
   it('should correctly separate JSON members', function () {
     expect(jsum.stringify({a: 1, b: 2}))
-      .to.be.equal('a:1|b:2')
+      .to.be.equal(`a:1${DELIM}b:2`)
   })
 
   it('should correctly stringify complex object', function () {
     expect(jsum.stringify({foo: [{c: 1}, {d: 2, e: 3}], bar: {a: 2, b: undefined}}))
       .to.be.equal(jsum.stringify({bar: {b: undefined, a: 2}, foo: [{c: 1}, {e: 3, d: 2}]}))
-  })
-
-  // See issue #6
-  it('should handle strings containing DELIM correctly', function () {
-    expect(jsum.stringify({a: 1, b: 2}))
-      .to.not.be.equal(jsum.stringify({a: "1|b:2"}))
   })
 
   // See issue #6

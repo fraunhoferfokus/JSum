@@ -4,7 +4,7 @@ const crypto = require('crypto')
 
 // Delimeter to separate object items form each other
 // when stringifying
-const DELIM = '|'
+const DELIM = '\u0000'
 
 /**
  * Stringifies a JSON object (not any randon JS object).
