@@ -4,7 +4,8 @@ const crypto = require('crypto')
 
 // Delimeter to separate object items form each other
 // when stringifying
-const DELIM = '\u0000'
+const KV_DELIM = Buffer.from([0xfe]).toString('utf8')
+const OBJ_DELIM = Buffer.from([0xff]).toString('utf8')
 
 /**
  * Stringifies a JSON object (not any randon JS object).
@@ -23,17 +24,17 @@ function stringify (obj) {
       stringifiedArr[i] = stringify(obj[i])
     }
 
-    return JSON.stringify(stringifiedArr)
+    return `[${stringifiedArr.join(',')}]`
   } else if (typeof obj === 'object' && obj !== null) {
     let acc = []
     let sortedKeys = Object.keys(obj).sort()
 
     for (let i = 0; i < sortedKeys.length; i++) {
       let k = sortedKeys[i]
-      acc[i] = `${k}:${stringify(obj[k])}`
+      acc[i] = `${k}${KV_DELIM}${stringify(obj[k])}`
     }
 
-    return acc.join(DELIM)
+    return acc.join(OBJ_DELIM)
   } else if (typeof obj === 'string') {
     // See issue #6 for details
     return `"${obj}"`

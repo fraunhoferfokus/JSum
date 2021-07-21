@@ -6,14 +6,15 @@ const expect = require('chai').expect
 
 const jsum = require('../index')
 
-const DELIM = '\u0000'
+const KV_DELIM = Buffer.from([0xfe])
+const OBJ_DELIM = Buffer.from([0xff])
 
 describe('JSum', function () {
   it('should correctly handle null', function () {
     // Why is null exceptional?
     // see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof#null
     expect(jsum.stringify({b: null}))
-      .to.be.equal('b:null')
+      .to.be.equal(`b${KV_DELIM}null`)
   })
 
   it('should correctly handle arrays', function () {
@@ -38,7 +39,7 @@ describe('JSum', function () {
 
   it('should correctly separate JSON members', function () {
     expect(jsum.stringify({a: 1, b: 2}))
-      .to.be.equal(`a:1${DELIM}b:2`)
+      .to.be.equal(`a${KV_DELIM}1${OBJ_DELIM}b${KV_DELIM}2`)
   })
 
   it('should correctly stringify complex object', function () {
