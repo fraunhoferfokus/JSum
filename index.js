@@ -19,18 +19,18 @@ const OBJ_DELIM = Buffer.from([0xff]).toString('utf8')
  */
 function stringify (obj) {
   if (Array.isArray(obj)) {
-    let stringifiedArr = []
+    const stringifiedArr = []
     for (let i = 0; i < obj.length; i++) {
       stringifiedArr[i] = stringify(obj[i])
     }
 
     return `[${stringifiedArr.join(',')}]`
   } else if (typeof obj === 'object' && obj !== null) {
-    let acc = []
-    let sortedKeys = Object.keys(obj).sort()
+    const acc = []
+    const sortedKeys = Object.keys(obj).sort()
 
     for (let i = 0; i < sortedKeys.length; i++) {
-      let k = sortedKeys[i]
+      const k = sortedKeys[i]
       acc[i] = `${k}${KV_DELIM}${stringify(obj[k])}`
     }
 
@@ -52,7 +52,7 @@ function stringify (obj) {
  * @see #stringify
  */
 function digest (obj, hashAlgorithm, encoding) {
-  let hash = crypto.createHash(hashAlgorithm)
+  const hash = crypto.createHash(hashAlgorithm)
   return hash.update(stringify(obj)).digest(encoding)
 }
 
