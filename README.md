@@ -10,8 +10,8 @@ const JSum = require('jsum')
 const obj1 = {foo: [{c: 1}, {d: 2, e: 3}], bar: {a: 2, b: undefined}}
 const obj2 = {bar: {b: undefined, a: 2}, foo: [{c: 1}, {e: 3, d: 2}]}
 
-console.log(JSum.digest(obj1, 'SHA256', 'hex')) // 7514a2664dab82189b89d8250da9d0e1e6c95d3efaca6ffc25e5db42d7a7d053
-console.log(JSum.digest(obj2, 'SHA256', 'hex')) // 7514a2664dab82189b89d8250da9d0e1e6c95d3efaca6ffc25e5db42d7a7d053
+console.log(JSum.digest(obj1, 'SHA256', 'hex')) // 9a08ad6302b1e9e5682c365c8b24c5ca2ea6db5c90b672bc5b579879136dda0c
+console.log(JSum.digest(obj2, 'SHA256', 'hex')) // 9a08ad6302b1e9e5682c365c8b24c5ca2ea6db5c90b672bc5b579879136dda0c
 ```
 
 ## Why this module?
@@ -40,7 +40,7 @@ of time advantage over some other viable modules\*:
 |-------------------------|:---------------------------------------------------:|
 | `json-hash`             | `81537`                                             |
 | `json-stable-stringify` | `12134`                                             |
-| `JSum`                  | `9656`                                              |
+| `JSum`                  | `7200`                                              |
 | `json-checksum`         | `FATAL ERROR: [...] - process out of memory`        |
 
 
@@ -64,52 +64,20 @@ Results:
 
 ```
 # benchmark/fixtures/medium.json (77986 bytes)
-  fast-json-stable-stringify x 645 ops/sec ±0.80% (86 runs sampled)
-  json-checksum x 228 ops/sec ±0.89% (82 runs sampled)
-  json-hash x 70.25 ops/sec ±1.89% (60 runs sampled)
-  json-stable-stringify x 601 ops/sec ±1.06% (86 runs sampled)
-  jsum x 1,196 ops/sec ±1.08% (85 runs sampled)
+  fast-json-stable-stringify x 629 ops/sec ±1.67% (81 runs sampled)
+  json-checksum x 236 ops/sec ±0.88% (82 runs sampled)
+  json-hash x 83.40 ops/sec ±1.25% (60 runs sampled)
+  json-stable-stringify x 609 ops/sec ±0.80% (87 runs sampled)
+  jsum x 1,118 ops/sec ±0.68% (89 runs sampled)
 
   fastest is jsum
 
 # benchmark/fixtures/small.json (456 bytes)
-  fast-json-stable-stringify x 64,153 ops/sec ±1.47% (88 runs sampled)
-  json-checksum x 20,089 ops/sec ±1.88% (87 runs sampled)
-  json-hash x 6,418 ops/sec ±2.13% (75 runs sampled)
-  json-stable-stringify x 52,923 ops/sec ±1.91% (89 runs sampled)
-  jsum x 89,836 ops/sec ±0.84% (88 runs sampled)
+  fast-json-stable-stringify x 67,381 ops/sec ±1.16% (84 runs sampled)
+  json-checksum x 21,372 ops/sec ±1.21% (89 runs sampled)
+  json-hash x 7,409 ops/sec ±1.17% (75 runs sampled)
+  json-stable-stringify x 54,015 ops/sec ±0.89% (83 runs sampled)
+  jsum x 90,816 ops/sec ±1.06% (87 runs sampled)
 
   fastest is jsum
 ```
-
-## I don't want this :-(
-Fair enough! Just copy (check the license first!) this for your own code and hash as you will:
-
-```js
-/**
- * Stringifies a JSON object (not any randon JS object).
- *
- * It should be noted that JS objects can have members of
- * specific type (e.g. function), that are not supported
- * by JSON.
- *
- * @param {Object} obj JSON object
- * @returns {String} stringified JSON object.
- */
-function serialize (obj) {
-  if (Array.isArray(obj)) {
-    return JSON.stringify(obj.map(i => serialize(i)))
-  } else if(typeof obj === 'string') {
-    return `"${obj}"`
-  } else if (typeof obj === 'object' && obj !== null) {
-    return Object.keys(obj)
-      .sort()
-      .map(k => `${k}:${serialize(obj[k])}`)
-      .join('|')
-  }
-
-  return obj
-}
-```
-
-***NOTE***: this code is slightly inferior in terms of performance comparing to module's implementation.

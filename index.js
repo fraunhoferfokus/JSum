@@ -1,14 +1,28 @@
 'use strict'
 
 const crypto = require('crypto')
+const { deprecate } = require('util')
 
-// Delimeter to separate object items form each other
-// when stringifying
-const KV_DELIM = Buffer.from([0xfe]).toString('utf8')
-const OBJ_DELIM = Buffer.from([0xff]).toString('utf8')
+function _serialize(obj) {
+  if (Array.isArray(obj)) {
+    for (let i = 0; i < obj.length; i++) {
+        obj[i] = _serialize(obj[i])
+    }
+    return obj
+  } else if (typeof obj == 'object' && obj != null) {
+      const sortedKeys = Object.keys(obj).sort()
+      for (let i = 0; i < sortedKeys.length; i++) {
+        const k = sortedKeys[i]
+        obj[k] = _serialize(obj[k])
+      }
+      return JSON.stringify(obj, sortedKeys)
+  }
+
+  return obj
+}
 
 /**
- * Stringifies a JSON object (not any randon JS object).
+ * Serializes a JSON object (not any random JS object).
  *
  * It should be noted that JS objects can have members of
  * specific type (e.g. function), that are not supported
@@ -17,30 +31,9 @@ const OBJ_DELIM = Buffer.from([0xff]).toString('utf8')
  * @param {Object} obj JSON object
  * @returns {String} stringified JSON object.
  */
-function stringify (obj) {
-  if (Array.isArray(obj)) {
-    const stringifiedArr = []
-    for (let i = 0; i < obj.length; i++) {
-      stringifiedArr[i] = stringify(obj[i])
-    }
-
-    return `[${stringifiedArr.join(',')}]`
-  } else if (typeof obj === 'object' && obj !== null) {
-    const acc = []
-    const sortedKeys = Object.keys(obj).sort()
-
-    for (let i = 0; i < sortedKeys.length; i++) {
-      const k = sortedKeys[i]
-      acc[i] = `${k}${KV_DELIM}${stringify(obj[k])}`
-    }
-
-    return acc.join(OBJ_DELIM)
-  } else if (typeof obj === 'string') {
-    // See issue #6 for details
-    return `"${obj}"`
-  }
-
-  return obj
+function serialize (obj) {
+  const ser = _serialize(obj)
+  return (typeof ser !== 'string') ? JSON.stringify(ser) : ser
 }
 
 /**
@@ -49,14 +42,17 @@ function stringify (obj) {
  * @param {Object} obj JSON object
  * @param {String} hashAlgorithm hash algorithm (e.g. SHA256)
  * @param {String} encoding hash encoding (e.g. base64) or none for buffer
- * @see #stringify
+ * @see #serialize
  */
 function digest (obj, hashAlgorithm, encoding) {
   const hash = crypto.createHash(hashAlgorithm)
-  return hash.update(stringify(obj)).digest(encoding)
+  return hash.update(serialize(obj)).digest(encoding)
 }
 
 module.exports = {
-  stringify: stringify,
+  stringify: () => {
+    throw new Error('"stringify()" is deprecated, use "serialize()" instead!')
+  },
+  serialize: serialize,
   digest: digest
 }
