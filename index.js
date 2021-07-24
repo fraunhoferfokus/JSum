@@ -1,21 +1,20 @@
 'use strict'
 
 const crypto = require('crypto')
-const { deprecate } = require('util')
 
-function _serialize(obj) {
+function _serialize (obj) {
   if (Array.isArray(obj)) {
     for (let i = 0; i < obj.length; i++) {
-        obj[i] = _serialize(obj[i])
+      obj[i] = _serialize(obj[i])
     }
     return obj
-  } else if (typeof obj == 'object' && obj != null) {
-      const sortedKeys = Object.keys(obj).sort()
-      for (let i = 0; i < sortedKeys.length; i++) {
-        const k = sortedKeys[i]
-        obj[k] = _serialize(obj[k])
-      }
-      return JSON.stringify(obj, sortedKeys)
+  } else if (typeof obj === 'object' && obj != null) {
+    const sortedKeys = Object.keys(obj).sort()
+    for (let i = 0; i < sortedKeys.length; i++) {
+      const k = sortedKeys[i]
+      obj[k] = _serialize(obj[k])
+    }
+    return JSON.stringify(obj, sortedKeys)
   }
 
   return obj
