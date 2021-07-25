@@ -1,7 +1,7 @@
 # JSum
 Consistent checksum calculation of JSON objects.
 
-[![Build Status](https://travis-ci.org/fraunhoferfokus/JSum.svg?branch=master)](https://travis-ci.org/fraunhoferfokus/JSum)
+[![Unit Tests](https://github.com/fraunhoferfokus/JSum/actions/workflows/node.js.yml/badge.svg)](https://github.com/fraunhoferfokus/JSum/actions/workflows/node.js.yml)
 
 ## Quick start
 ```js
