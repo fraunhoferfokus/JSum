@@ -15,6 +15,9 @@ function _serialize (obj) {
       obj[k] = _serialize(obj[k])
     }
     return JSON.stringify(obj, sortedKeys)
+  } else if (typeof obj === 'string') {
+    // See #8 for string abuse!
+    return JSON.stringify(obj)
   }
 
   return obj

@@ -44,4 +44,13 @@ describe('JSum', function () {
     expect(jsum.serialize({ a: 1 }))
       .to.not.be.equal(jsum.serialize({ a: '1' }))
   })
+
+  // See issue #8
+  it('should not be fooled by stringified values', function () {
+    expect(jsum.serialize({a: '{"b":42}'}))
+      .to.not.be.equal(jsum.serialize({a: {b:42}}))
+
+    expect(jsum.serialize(['{"foo":1}']))
+    .to.not.be.equal(jsum.serialize([{"foo":1}]))
+  })
 })
