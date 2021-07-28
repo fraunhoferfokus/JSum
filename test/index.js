@@ -11,12 +11,12 @@ describe('JSum', function () {
     // Why is null exceptional?
     // see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof#null
     expect(jsum.serialize({ b: null }))
-      .to.be.equal('{"b":null}')
+      .to.be.equal('null["b"]')
   })
 
   it('should correctly handle arrays', function () {
     expect(jsum.serialize([1, 2, true]))
-      .to.be.equal('[1,2,true]')
+      .to.be.equal('12true')
   })
 
   it('should correctly sort object members', function () {
@@ -56,6 +56,6 @@ describe('JSum', function () {
 
   it('should properly sort nested objects', function () {
     expect(jsum.serialize({ x: 3, a: { z: { l: 4, k: 3, a: 1, b: 2 }, c: 1 }, k: [{ l: 2, b: 1, z: 3 }, 4, 5] }))
-      .to.equal('{"a":{"c":1,"z":{"a":1,"b":2,"k":3,"l":4}},"k":[{"b":1,"l":2,"z":3},4,5],"x":3}')
+      .to.equal(jsum.serialize({ a: { c: 1, z: { a: 1, b: 2, k: 3, l: 4 } }, k: [{ b: 1, l: 2, z: 3 }, 4, 5], x: 3 }))
   })
 })

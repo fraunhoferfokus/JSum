@@ -2,32 +2,23 @@
 
 const crypto = require('crypto')
 
-function _collectKeys (obj) {
-  let res = []
-
+function _serialize(obj, acc) {
   if (Array.isArray(obj)) {
+    let acc2 = ''
     for (let i = 0; i < obj.length; i++) {
-      res = res.concat(_collectKeys(obj[i]))
+      acc2 += _serialize(obj[i], acc)
     }
+
+    return acc + acc2
   } else if (typeof obj === 'object' && obj !== null) {
-    const keys = Object.keys(obj)
-    res = res.concat(keys)
-    for (const k of keys) {
-      res = res.concat(_collectKeys(obj[k]))
+    const keys = Object.keys(obj).sort()
+    for (let i = 0; i < keys.length; i++) {
+      acc += _serialize(obj[keys[i]], '')
     }
+    return acc + JSON.stringify(keys)
   }
 
-  return res
-}
-
-/**
- * Collects and sorts all unique keys of the given object recursively.
- *
- * @param {any} obj object to inspect
- * @returns sorted unique keys
- */
-function collectKeys (obj) {
-  return [...new Set(_collectKeys(obj).sort())]
+  return (acc + JSON.stringify(obj))
 }
 
 /**
@@ -41,7 +32,7 @@ function collectKeys (obj) {
  * @returns {String} stringified JSON object.
  */
 function serialize (obj) {
-  return JSON.stringify(obj, collectKeys(obj))
+  return _serialize(obj, '')
 }
 
 /**
@@ -62,6 +53,5 @@ module.exports = {
     throw new Error('"stringify()" is deprecated, use "serialize()" instead!')
   },
   serialize: serialize,
-  digest: digest,
-  collectKeys: collectKeys
+  digest: digest
 }
