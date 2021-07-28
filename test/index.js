@@ -47,10 +47,15 @@ describe('JSum', function () {
 
   // See issue #8
   it('should not be fooled by stringified values', function () {
-    expect(jsum.serialize({a: '{"b":42}'}))
-      .to.not.be.equal(jsum.serialize({a: {b:42}}))
+    expect(jsum.serialize({ a: '{"b":42}' }))
+      .to.not.be.equal(jsum.serialize({ a: { b: 42 } }))
 
     expect(jsum.serialize(['{"foo":1}']))
-    .to.not.be.equal(jsum.serialize([{"foo":1}]))
+      .to.not.be.equal(jsum.serialize([{ foo: 1 }]))
+  })
+
+  it('should properly sort nested objects', function () {
+    expect(jsum.serialize({ x: 3, a: { z: { l: 4, k: 3, a: 1, b: 2 }, c: 1 }, k: [{ l: 2, b: 1, z: 3 }, 4, 5] }))
+      .to.equal('{"a":{"c":1,"z":{"a":1,"b":2,"k":3,"l":4}},"k":[{"b":1,"l":2,"z":3},4,5],"x":3}')
   })
 })

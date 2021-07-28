@@ -2,25 +2,32 @@
 
 const crypto = require('crypto')
 
-function _serialize (obj) {
+function _collectKeys (obj) {
+  let res = []
+
   if (Array.isArray(obj)) {
     for (let i = 0; i < obj.length; i++) {
-      obj[i] = _serialize(obj[i])
+      res = res.concat(_collectKeys(obj[i]))
     }
-    return obj
-  } else if (typeof obj === 'object' && obj != null) {
-    const sortedKeys = Object.keys(obj).sort()
-    for (let i = 0; i < sortedKeys.length; i++) {
-      const k = sortedKeys[i]
-      obj[k] = _serialize(obj[k])
+  } else if (typeof obj === 'object' && obj !== null) {
+    const keys = Object.keys(obj)
+    res = res.concat(keys)
+    for (const k of keys) {
+      res = res.concat(_collectKeys(obj[k]))
     }
-    return JSON.stringify(obj, sortedKeys)
-  } else if (typeof obj === 'string') {
-    // See #8 for string abuse!
-    return JSON.stringify(obj)
   }
 
-  return obj
+  return res
+}
+
+/**
+ * Collects and sorts all unique keys of the given object recursively.
+ *
+ * @param {any} obj object to inspect
+ * @returns sorted unique keys
+ */
+function collectKeys (obj) {
+  return [...new Set(_collectKeys(obj).sort())]
 }
 
 /**
@@ -34,8 +41,7 @@ function _serialize (obj) {
  * @returns {String} stringified JSON object.
  */
 function serialize (obj) {
-  const ser = _serialize(obj)
-  return (typeof ser !== 'string') ? JSON.stringify(ser) : ser
+  return JSON.stringify(obj, collectKeys(obj))
 }
 
 /**
@@ -56,5 +62,6 @@ module.exports = {
     throw new Error('"stringify()" is deprecated, use "serialize()" instead!')
   },
   serialize: serialize,
-  digest: digest
+  digest: digest,
+  collectKeys: collectKeys
 }
