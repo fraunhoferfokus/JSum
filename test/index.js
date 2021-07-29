@@ -11,12 +11,12 @@ describe('JSum', function () {
     // Why is null exceptional?
     // see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof#null
     expect(jsum.serialize({ b: null }))
-      .to.be.equal('null["b"]')
+      .to.be.equal('{["b"]null}')
   })
 
   it('should correctly handle arrays', function () {
-    expect(jsum.serialize([1, 2, true]))
-      .to.be.equal('12true')
+    expect(jsum.serialize([1, 2, true, 'false']))
+      .to.be.equal('[1,2,true,"false"]')
   })
 
   it('should correctly sort object members', function () {

@@ -2,23 +2,19 @@
 
 const crypto = require('crypto')
 
-function _serialize(obj, acc) {
+function _serialize(obj, acc = '') {
   if (Array.isArray(obj)) {
-    let acc2 = ''
-    for (let i = 0; i < obj.length; i++) {
-      acc2 += _serialize(obj[i], acc)
-    }
-
-    return acc + acc2
+    return `${acc}[${obj.map(el => _serialize(el, acc)).join(',')}]`
   } else if (typeof obj === 'object' && obj !== null) {
     const keys = Object.keys(obj).sort()
+    acc += `{${JSON.stringify(keys)}`
     for (let i = 0; i < keys.length; i++) {
-      acc += _serialize(obj[keys[i]], '')
+      acc += _serialize(obj[keys[i]])
     }
-    return acc + JSON.stringify(keys)
+    return `${acc}}`
   }
 
-  return (acc + JSON.stringify(obj))
+  return `${acc}${JSON.stringify(obj)}`
 }
 
 /**
