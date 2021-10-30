@@ -41,7 +41,17 @@ function collectKeys (obj) {
  * @returns {String} stringified JSON object.
  */
 function serialize (obj) {
-  return JSON.stringify(obj, collectKeys(obj))
+  function serializeUnsupportedObjects (key, value) {
+    if (value instanceof RegExp) {
+      return String(value)
+    }
+
+    return value
+  }
+
+  const serialized = JSON.parse(JSON.stringify(obj, serializeUnsupportedObjects))
+
+  return JSON.stringify(serialized, collectKeys(obj))
 }
 
 /**

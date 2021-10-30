@@ -58,4 +58,9 @@ describe('JSum', function () {
     expect(jsum.serialize({ x: 3, a: { z: { l: 4, k: 3, a: 1, b: 2 }, c: 1 }, k: [{ l: 2, b: 1, z: 3 }, 4, 5] }))
       .to.equal('{"a":{"c":1,"z":{"a":1,"b":2,"k":3,"l":4}},"k":[{"b":1,"l":2,"z":3},4,5],"x":3}')
   })
+
+  it('should stringify regexes', function () {
+    expect(jsum.serialize({ a: /[a-zA-Z]/ }))
+      .to.equal('{"a":"/[a-zA-Z]/"}')
+  })
 })
