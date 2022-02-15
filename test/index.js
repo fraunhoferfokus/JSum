@@ -11,7 +11,7 @@ describe('JSum', function () {
     // Why is null exceptional?
     // see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof#null
     expect(jsum.serialize({ b: null }))
-      .to.be.equal('{["b"]null}')
+      .to.be.equal('{["b"]null,}')
   })
 
   it('should correctly handle arrays', function () {
@@ -52,6 +52,9 @@ describe('JSum', function () {
 
     expect(jsum.serialize(['{"foo":1}']))
       .to.not.be.equal(jsum.serialize([{ foo: 1 }]))
+
+      expect(jsum.serialize({x:1, y:23}))
+      .to.not.be.equal(jsum.serialize({x:12, y:3}))
   })
 
   it('should properly sort nested objects', function () {
