@@ -64,20 +64,20 @@ Results:
 
 ```
 # benchmark/fixtures/medium.json (77986 bytes)
-  fast-json-stable-stringify x 629 ops/sec ±1.67% (81 runs sampled)
-  json-checksum x 236 ops/sec ±0.88% (82 runs sampled)
-  json-hash x 83.40 ops/sec ±1.25% (60 runs sampled)
-  json-stable-stringify x 609 ops/sec ±0.80% (87 runs sampled)
-  jsum x 1,118 ops/sec ±0.68% (89 runs sampled)
+  fast-json-stable-stringify x 1,191 ops/sec ±1.11% (89 runs sampled)
+  json-checksum x 406 ops/sec ±2.04% (89 runs sampled)
+  json-hash x 148 ops/sec ±2.08% (75 runs sampled)
+  json-stable-stringify x 1,051 ops/sec ±2.29% (88 runs sampled)
+  jsum x 1,339 ops/sec ±0.77% (93 runs sampled)
 
   fastest is jsum
 
 # benchmark/fixtures/small.json (456 bytes)
-  fast-json-stable-stringify x 67,381 ops/sec ±1.16% (84 runs sampled)
-  json-checksum x 21,372 ops/sec ±1.21% (89 runs sampled)
-  json-hash x 7,409 ops/sec ±1.17% (75 runs sampled)
-  json-stable-stringify x 54,015 ops/sec ±0.89% (83 runs sampled)
-  jsum x 90,816 ops/sec ±1.06% (87 runs sampled)
+  fast-json-stable-stringify x 116,709 ops/sec ±2.25% (91 runs sampled)
+  json-checksum x 36,311 ops/sec ±1.66% (91 runs sampled)
+  json-hash x 12,051 ops/sec ±3.62% (77 runs sampled)
+  json-stable-stringify x 91,078 ops/sec ±2.08% (89 runs sampled)
+  jsum x 116,130 ops/sec ±1.46% (90 runs sampled)
 
   fastest is jsum
 ```

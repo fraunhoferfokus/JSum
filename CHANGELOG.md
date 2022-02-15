@@ -1,4 +1,7 @@
 # Changelog
+  * `2.0.0-alpha.4`:
+    * Fix hash collision (see issue #8)
+    * Update mocha (dev dependency)
   * `2.0.0-alpha.3`: Remove `.github` files from `npm`.
   * `2.0.0-alpha.2`: Use GitHub Actions instead of Travis CI.
   * `2.0.0-alpha.1`: Use `JSON.stringify()` for all serializations (2x faster than before!)
